@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model organ_types {
+  id        Int      @id @default(autoincrement())
+  type_name String   @db.VarChar(30)
+  organs    organs[]
+}
+
+model organs {
+  id                              Int         @id @default(autoincrement())
+  organ_type                      Int
+  donor                           Int
+  institution                     Int
+  organ_types                     organ_types @relation(fields: [organ_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "organs_ibfk_1")
+  users_organs_donorTousers       users       @relation("organs_donorTousers", fields: [donor], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "organs_ibfk_2")
+  users_organs_institutionTousers users       @relation("organs_institutionTousers", fields: [institution], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "organs_ibfk_3")
+
+  @@index([donor], map: "donor")
+  @@index([institution], map: "institution")
+  @@index([organ_type], map: "organ_type")
+}
+
+model user_types {
+  id        Int     @id @default(autoincrement())
+  type_name String  @db.VarChar(30)
+  users     users[]
+}
+
+model users {
+  id                               Int        @id @default(autoincrement())
+  user_type                        Int
+  user_name                        String     @db.VarChar(70)
+  email                            String     @db.VarChar(255)
+  user_password                    String     @db.VarChar(70)
+  birth_date                       DateTime   @db.Date
+  phone_number                     String     @db.VarChar(20)
+  doc_country                      String?    @db.VarChar(35)
+  doc_number                       String?    @db.VarChar(20)
+  adress                           String?    @db.VarChar(95)
+  city                             String?    @db.VarChar(35)
+  state                            String?    @db.VarChar(35)
+  country                          String?    @db.VarChar(35)
+  zip                              String?    @db.VarChar(20)
+  user_types                       user_types @relation(fields: [user_type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+  organs_organs_donorTousers       organs[]   @relation("organs_donorTousers")
+  organs_organs_institutionTousers organs[]   @relation("organs_institutionTousers")
+
+  @@index([user_type], map: "user_type")
+}
