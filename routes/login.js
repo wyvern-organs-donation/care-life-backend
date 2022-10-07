@@ -10,8 +10,7 @@ var router = express.Router();
 
 passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password'}, async (email, password, cb) => {
     // Check if user found
-    const user = await prisma.users.findFirst(0);
-    console.log(user)
+    const user = await prisma.users.findFirst({where: {email: email}});
     if (!user)
         return cb(null, false, {message: "No user found.", statusCode: 400});
   
@@ -23,13 +22,15 @@ passport.use(new LocalStrategy({usernameField: 'email', passwordField: 'password
     return cb(null, user);
 }));
 
+/* Save the session of which user is logged in*/
 passport.serializeUser(function(user, cb) {
     process.nextTick(function() {
       cb(null, { id: user.id, username: user.username });
     });
 });
-  
-  passport.deserializeUser(function(user, cb) {
+
+/* Erases the login information that was saved */
+passport.deserializeUser(function(user, cb) {
     process.nextTick(function() {
       return cb(null, user);
     });
@@ -40,16 +41,21 @@ router.get('/login', function (req, res, next) {
     res.render('login', { message: req.flash('error')[0] });
 });
 
-  
+
+/** Verifica os dados do login */
 router.post('/auth', passport.authenticate('local', {
     successRedirect: '/secret',
     failureRedirect: '/login',
     failureFlash : true
 }));
 
+
+
+/* Accessible page with logged in user only */  
 router.get('/secret', connectEnsureLogin.ensureLoggedIn(), (req, res) =>
   res.render('secret', { title: 'Secret Page' })
 );
+
 
 router.get('/logout', (req, res) => {
     req.logout(function(err) {
