@@ -5,6 +5,9 @@
   "scripts": {
     "start": "nodemon ./bin/www"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "dependencies": {
     "@prisma/client": "^4.4.0",
     "bcryptjs": "^2.4.3",
