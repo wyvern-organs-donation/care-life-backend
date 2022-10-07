@@ -7,12 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model organ_types {
-  id        Int      @id @default(autoincrement())
-  type_name String   @db.VarChar(30)
-  organs    organs[]
-}
-
 model organs {
   id                              Int         @id @default(autoincrement())
   organ_type                      Int
@@ -25,12 +19,6 @@ model organs {
   @@index([donor], map: "donor")
   @@index([institution], map: "institution")
   @@index([organ_type], map: "organ_type")
-}
-
-model user_types {
-  id        Int     @id @default(autoincrement())
-  type_name String  @db.VarChar(30)
-  users     users[]
 }
 
 model users {
@@ -53,4 +41,16 @@ model users {
   organs_organs_institutionTousers organs[]   @relation("organs_institutionTousers")
 
   @@index([user_type], map: "user_type")
+}
+
+model organ_types {
+  id        Int      @id @default(autoincrement())
+  type_name String   @db.VarChar(30)
+  organs    organs[]
+}
+
+model user_types {
+  id        Int     @id @default(autoincrement())
+  type_name String  @db.VarChar(30)
+  users     users[]
 }
