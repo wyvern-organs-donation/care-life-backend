@@ -1,18 +1,18 @@
 const express = require('express');
-const { hash } = require("../utils/utils");
+const { hash } = require('../utils/utils');
 const router = express.Router();
 
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-router.post('/register', async (req, res) => {
+router.post('/', async (req, res) => {
   const {
-    user_name,
+    name,
     email,
-    user_password,
+    password,
     birth_date,
     phone_number,
-    user_types_id,
+    type_id,
     doc_country,
     doc_number,
     adress,
@@ -22,35 +22,39 @@ router.post('/register', async (req, res) => {
     zip,
   } = req.body;
 
-  if (!user_name) {
-    return res.status(422).json({ message: 'O nome é obrigatório' });
+  if (!name) {
+    return res.status(422).json({ message: 'Name is required!' });
   }
 
   if (!email) {
-    return res.status(422).json({ message: 'O email é obrigatório' });
+    return res.status(422).json({ message: 'Email is required!' });
   }
 
-  if (!user_password) {
-    return res.status(422).json({ message: 'A senha é obrigatória' });
+  if (!password) {
+    return res.status(422).json({ message: 'Password is required!' });
   }
 
   if (!birth_date) {
-    return res
-      .status(422)
-      .json({ message: 'A data de aniversário é obrigatória' });
+    return res.status(422).json({ message: 'Birth date is required!' });
   }
 
   if (!phone_number) {
-    return res.status(422).json({ message: 'O telefone é obrigatório' });
+    return res.status(422).json({ message: 'Phone is required!' });
   }
+
+  if (!type_id) {
+    return res.status(422).json({ message: 'Type user is required!' });
+  }
+
+  const formatDate = new Date(birth_date);
 
   try {
     const user = await prisma.users.create({
       data: {
-        user_name,
+        name,
         email,
-        user_password: await hash(user_password),
-        birth_date: new Date(birth_date),
+        password: await hash(password),
+        birth_date: formatDate,
         phone_number,
         country,
         state,
@@ -61,13 +65,13 @@ router.post('/register', async (req, res) => {
         doc_number,
         user_types: {
           connect: {
-            id: user_types_id
+            id: type_id,
           },
         },
       },
     });
 
-    res.status(200).json({ message: 'Usuśario cadastrado no banco' });
+    res.status(200).json({ message: 'User successfully registered!', user });
   } catch (error) {
     console.error(error);
   } finally {

@@ -3,20 +3,20 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-router.post('/register/typeorgan', async (req, res) => {
-  const { type_name } = req.body;
+router.post('/', async (req, res) => {
+  const { name } = req.body;
 
-  if (!type_name) {
-    res.status(400).json({ message: 'O type name é obrigatório' });
+  if (!name) {
+    res.status(400).json({ message: 'Organ name is required!' });
   }
 
   try {
     const typeOrgan = await prisma.organ_types.create({
       data: {
-        type_name,
+        name,
       },
     });
-    res.status(200).json({ message: 'Tipo de orgão cadastrado com sucesso' });
+    res.status(200).json({ message: 'Organ type successfully registered!' });
   } catch (error) {
     res.status(400).json({ error: error });
   }

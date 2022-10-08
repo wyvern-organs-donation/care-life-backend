@@ -7,13 +7,13 @@ var flash = require('express-flash');
 var passport = require('passport');
 var session = require('express-session');
 
-var indexRouter = require('./routes/homeRouter');
-var usersRouter = require('./routes/usersRouter');
-var registerRouter = require('./routes/registerUser');
+var home = require('./routes/home');
+var users = require('./routes/users');
+var register = require('./routes/registerUser');
 var registerTypeUser = require('./routes/regiterTypeUser');
 var registerTypeOrgan = require('./routes/registerTypeOrgan');
 var registerOrgan = require('./routes/registerOrgan');
-var loginRouter = require('./routes/loginRouter');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -23,22 +23,24 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(session({
-  secret: 'super secret key',
-  resave: false,
-  saveUninitialized: false
-}));
+app.use(
+  session({
+    secret: 'super secret key',
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 app.use(passport.authenticate('session'));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(indexRouter);
-app.use(usersRouter);
-app.use(registerRouter);
-app.use(registerTypeUser);
-app.use(registerTypeOrgan);
-app.use(registerOrgan);
-app.use(loginRouter);
+app.use('/', home);
+app.use('/users', users);
+app.use('/register', register);
+app.use('/register/typeuser', registerTypeUser);
+app.use('/register/typeorgan', registerTypeOrgan);
+app.use('/register/organ', registerOrgan);
+app.use(login);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
