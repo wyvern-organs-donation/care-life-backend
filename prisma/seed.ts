@@ -9,6 +9,11 @@ const USER_TYPES = [
     "Instituições"
 ]
 
+const ORGAN_TYPES = [
+  "Orgãos",
+  "Tecido",
+]
+
 /**
  * For each type_name, create a type name record in the DB
  */
@@ -18,4 +23,11 @@ function seedUser_types() {
     .catch(e => console.error('[SEED] Failed to create user_types records', e))
 }
 
+function seedOrgan_type() {
+  Promise.all(ORGAN_TYPES.map(n => prisma.organ_types.create({ data: { type_name: n } })))
+    .then(() => console.info('[SEED] Succussfully create organ_types records'))
+    .catch(e => console.error('[SEED] Failed to create organ_types records', e))
+}
+
 seedUser_types();
+seedOrgan_type();
