@@ -7,13 +7,13 @@ var flash = require('express-flash');
 var passport = require('passport');
 var session = require('express-session');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var indexRouter = require('./routes/homeRouter');
+var usersRouter = require('./routes/usersRouter');
 var registerRouter = require('./routes/registerUser');
 var registerTypeUser = require('./routes/regiterTypeUser');
 var registerTypeOrgan = require('./routes/registerTypeOrgan');
 var registerOrgan = require('./routes/registerOrgan');
-var loginRouter = require('./routes/login');
+var loginRouter = require('./routes/loginRouter');
 
 var app = express();
 
