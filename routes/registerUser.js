@@ -2,7 +2,7 @@ const express = require('express');
 const { hash } = require('../utils/utils');
 const router = express.Router();
 
-const { PrismaClient } = require('@prisma/client');
+const { PrismaClient, Prisma  } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 router.post('/', async (req, res) => {
@@ -73,7 +73,17 @@ router.post('/', async (req, res) => {
 
     res.status(200).json({ message: 'User successfully registered!', user });
   } catch (error) {
-    console.error(error);
+    console.log(error);
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (error.code === 'P2002') {
+        if (error.meta.target === 'users_doc_number_key') {
+          res.status(400).json({ message: 'já possui um cadastro com esse CPF'});
+        } if (error.meta.target === 'users_email_key') {
+          res.status(400).json({ message: 'já possui um cadastro com esse email'});
+        }
+      }
+    }
   } finally {
     async () => {
       await prisma.$disconnect();
