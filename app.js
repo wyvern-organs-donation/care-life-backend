@@ -7,13 +7,13 @@ var flash = require('express-flash');
 var passport = require('passport');
 var session = require('express-session');
 
-var home = require('./routes/home');
-var users = require('./routes/users');
-var register = require('./routes/registerUser');
-var registerTypeUser = require('./routes/regiterTypeUser');
-var registerTypeOrgan = require('./routes/registerTypeOrgan');
-var registerOrgan = require('./routes/registerOrgan');
-var login = require('./routes/login');
+var indexRouter = require('./routes/home');
+var usersRouter = require('./routes/users');
+var registerRouter = require('./routes/registerUser');
+var registerTypeUserRouter = require('./routes/regiterTypeUser');
+var registerTypeOrganRouter = require('./routes/registerTypeOrgan');
+var registerOrganRouter = require('./routes/registerOrgan');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -34,13 +34,13 @@ app.use(passport.authenticate('session'));
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', home);
-app.use('/users', users);
-app.use('/register', register);
-app.use('/register/typeuser', registerTypeUser);
-app.use('/register/typeorgan', registerTypeOrgan);
-app.use('/register/organ', registerOrgan);
-app.use(login);
+app.use(indexRouter);
+app.use(usersRouter);
+app.use(registerRouter);
+app.use(registerTypeUserRouter);
+app.use(registerTypeOrganRouter);
+app.use(registerOrganRouter);
+app.use(loginRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

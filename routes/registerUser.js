@@ -5,7 +5,8 @@ const router = express.Router();
 const { PrismaClient, Prisma  } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-router.post('/', async (req, res) => {
+/** Route to register user */
+router.post('/register', async (req, res) => {
   const {
     name,
     email,
