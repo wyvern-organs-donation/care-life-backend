@@ -1,7 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var flash = require('express-flash');
 var passport = require('passport');
@@ -14,6 +13,7 @@ var registerTypeUserRouter = require('./routes/regiterTypeUser');
 var registerTypeOrganRouter = require('./routes/registerTypeOrgan');
 var registerOrganRouter = require('./routes/registerOrgan');
 var loginRouter = require('./routes/login');
+var confirmRegister = require('./routes/confirmRegistration');
 
 var app = express();
 
@@ -41,6 +41,7 @@ app.use(registerTypeUserRouter);
 app.use(registerTypeOrganRouter);
 app.use(registerOrganRouter);
 app.use(loginRouter);
+app.use(confirmRegister);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
