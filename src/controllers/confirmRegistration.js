@@ -1,5 +1,8 @@
 const nodemailer = require('nodemailer');
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 
 const sendConfirmationEmail = async (user) => {
 
@@ -7,8 +10,8 @@ const sendConfirmationEmail = async (user) => {
         host: "smtp.mailtrap.io",
         port: 2525,
         auth: {
-            user: "f13a141549952c",
-            pass: "021b4c23021d2a"
+            user: process.env.EMAIL_USER,
+            pass: process.env.EMAIL_PASS
         }
     });
 
