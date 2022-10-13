@@ -2,37 +2,37 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
-var flash = require('express-flash');
 var passport = require('passport');
-var session = require('express-session');
+var sessions = require('express-session')
 
-var indexRouter = require('./routes/home');
-var usersRouter = require('./routes/users');
-var registerRouter = require('./routes/registerUser');
-var registerTypeUserRouter = require('./routes/regiterTypeUser');
-var registerTypeOrganRouter = require('./routes/registerTypeOrgan');
-var registerOrganRouter = require('./routes/registerOrgan');
-var loginRouter = require('./routes/login');
-var confirmRegister = require('./routes/confirmRegistration');
+var indexRouter = require('./src/routes/home');
+var usersRouter = require('./src/routes/users');
+var registerRouter = require('./src/routes/registerUser');
+var registerTypeUserRouter = require('./src/routes/regiterTypeUser');
+var registerTypeOrganRouter = require('./src/routes/registerTypeOrgan');
+var registerOrganRouter = require('./src/routes/registerOrgan');
+var loginRouter = require('./src/routes/login');
 
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, '/src/views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(
-  session({
-    secret: 'super secret key',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
-app.use(passport.authenticate('session'));
-app.use(flash());
+app.use(passport.initialize());//initializes passport configuration
 app.use(express.static(path.join(__dirname, 'public')));
+
+const dotenv = require('dotenv');
+dotenv.config();
+
+app.use(sessions({
+    secret: process.env.SECRET,
+    saveUninitialized:true,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    resave: false 
+}));
 
 app.use(indexRouter);
 app.use(usersRouter);
@@ -41,7 +41,7 @@ app.use(registerTypeUserRouter);
 app.use(registerTypeOrganRouter);
 app.use(registerOrganRouter);
 app.use(loginRouter);
-app.use(confirmRegister);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

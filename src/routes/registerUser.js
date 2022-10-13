@@ -1,6 +1,7 @@
 const express = require('express');
-const { hash } = require('../utils/utils');
+const { hash } = require('../controllers/hashPassword');
 const router = express.Router();
+const sendConfirmationEmail = require('../controllers/confirmRegistration')
 
 const { PrismaClient, Prisma  } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -72,6 +73,9 @@ router.post('/register', async (req, res) => {
       },
     });
 
+    // Colocar função do sendmail aqui 
+    await sendConfirmationEmail(user)
+    
     res.status(200).json({ message: 'User successfully registered!', user });
   } catch (error) {
     console.log(error);

@@ -10,8 +10,8 @@ const USER_TYPES = [
 ]
 
 const ORGAN_TYPES = [
-  "Orgãos",
-  "Tecido",
+    "Orgãos",
+    "Tecido",
 ]
 
 /**
