@@ -3,7 +3,7 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-router.post('/', async (req, res) => {
+router.post('/register/organ', async (req, res) => {
   const { type_id, donor_id, institution_id } = req.body;
 
   if (!type_id) {
