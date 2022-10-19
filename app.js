@@ -6,12 +6,11 @@ var passport = require('passport');
 var sessions = require('express-session')
 
 var indexRouter = require('./src/routes/home');
-var usersRouter = require('./src/routes/users');
-var registerRouter = require('./src/routes/registerUser');
-var registerTypeUserRouter = require('./src/routes/regiterTypeUser');
+var registerTypeUserRouter = require('./src/routes/registerTypeUser');
 var registerTypeOrganRouter = require('./src/routes/registerTypeOrgan');
 var registerOrganRouter = require('./src/routes/registerOrgan');
 var loginRouter = require('./src/routes/login');
+const routes = require('./src/routes');
 
 var app = express();
 
@@ -35,13 +34,12 @@ app.use(sessions({
 }));
 
 app.use(indexRouter);
-app.use(usersRouter);
-app.use(registerRouter);
 app.use(registerTypeUserRouter);
 app.use(registerTypeOrganRouter);
 app.use(registerOrganRouter);
 app.use(loginRouter);
 
+app.use(routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
