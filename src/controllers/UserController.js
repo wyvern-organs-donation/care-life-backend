@@ -1,7 +1,7 @@
 const { PrismaClient, Prisma } = require('@prisma/client');
 const { hash } = require('../controllers/hashPassword');
 const crypto = require('crypto');
-const sendConfirmationEmail = require('../controllers/confirmRegistration')
+const sendConfirmationEmail = require('../controllers/registrationController')
 
 const prismaClient = new PrismaClient();
 
@@ -87,7 +87,7 @@ class UserController {
       const formatDate = new Date(birth_date);
     
       try {
-        const user = await prisma.users.create({
+        const user = await prismaClient.users.create({
           data: {
             name,
             email,
@@ -109,7 +109,7 @@ class UserController {
     
         var now = new Date();
     
-        const token = await prisma.confirmation_tokens.create({
+        const token = await prismaClient.confirmation_tokens.create({
           data: {
             token: crypto.randomBytes(16).toString('hex'),
             expiration: new Date(now.setTime(now.getTime() + 24 * 60 * 60 * 1000)),
@@ -135,7 +135,7 @@ class UserController {
         }
       } finally {
         async () => {
-          await prisma.$disconnect();
+          await prismaClient.$disconnect();
         };
       }
         
