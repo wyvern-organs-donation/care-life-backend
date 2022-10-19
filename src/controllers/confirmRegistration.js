@@ -3,9 +3,7 @@ const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
 
-
 const sendConfirmationEmail = async (user) => {
-
     var transport = nodemailer.createTransport({
         host: "smtp.mailtrap.io",
         port: 2525,
