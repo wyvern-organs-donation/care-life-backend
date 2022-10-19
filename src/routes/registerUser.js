@@ -1,10 +1,13 @@
 const express = require('express');
 const { hash } = require('../controllers/hashPassword');
 const router = express.Router();
-const sendConfirmationEmail = require('../controllers/confirmRegistration')
+const crypto = require('crypto');
+const sendConfirmationEmail = require('../controllers/registrationController')
+
 
 const { PrismaClient, Prisma  } = require('@prisma/client');
 const prisma = new PrismaClient();
+
 
 /** Route to register user */
 router.post('/register', async (req, res) => {
@@ -15,12 +18,10 @@ router.post('/register', async (req, res) => {
     birth_date,
     phone_number,
     type_id,
-    doc_country,
-    doc_number,
+    cpf,
     adress,
     city,
     state,
-    country,
     zip,
   } = req.body;
 
@@ -58,13 +59,11 @@ router.post('/register', async (req, res) => {
         password: await hash(password),
         birth_date: formatDate,
         phone_number,
-        country,
         state,
         city,
         adress,
         zip,
-        doc_country,
-        doc_number,
+        cpf,
         user_types: {
           connect: {
             id: type_id,
@@ -73,8 +72,18 @@ router.post('/register', async (req, res) => {
       },
     });
 
-    // Colocar função do sendmail aqui 
-    await sendConfirmationEmail(user)
+    var now = new Date();
+
+    const token = await prisma.confirmation_tokens.create({
+      data: {
+        token: crypto.randomBytes(16).toString('hex'),
+        expiration: new Date(now.setTime(now.getTime() + 24 * 60 * 60 * 1000)),
+        user_id: user.id,
+      }
+    })
+
+    
+    await sendConfirmationEmail(user, token, req)
     
     res.status(200).json({ message: 'User successfully registered!', user });
   } catch (error) {
@@ -82,7 +91,7 @@ router.post('/register', async (req, res) => {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
       if (error.code === 'P2002') {
-        if (error.meta.target === 'users_doc_number_key') {
+        if (error.meta.target === 'users_cpf_key') {
           res.status(400).json({ message: 'já possui um cadastro com esse CPF'});
         } if (error.meta.target === 'users_email_key') {
           res.status(400).json({ message: 'já possui um cadastro com esse email'});

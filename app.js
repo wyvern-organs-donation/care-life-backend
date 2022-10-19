@@ -12,6 +12,7 @@ var registerTypeUserRouter = require('./src/routes/regiterTypeUser');
 var registerTypeOrganRouter = require('./src/routes/registerTypeOrgan');
 var registerOrganRouter = require('./src/routes/registerOrgan');
 var loginRouter = require('./src/routes/login');
+var confirmRegistrationRouter = require('./src/routes/confirmRegistration')
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use(registerTypeUserRouter);
 app.use(registerTypeOrganRouter);
 app.use(registerOrganRouter);
 app.use(loginRouter);
+app.use(confirmRegistrationRouter);
 
 
 // catch 404 and forward to error handler
