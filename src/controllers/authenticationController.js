@@ -23,7 +23,10 @@ passport.use(
       if (!validPassword) {
         return cb(null, false, { status: false, message: 'Incorrect username or password.' });
       }
-      return cb(null, user, { status: true, message: 'Logged in successfully' });
+      else if (!user.status){
+        return cb(null, false, { status: false, message: 'Your Email has not been verified. Please click on resend'});
+      }
+      return cb(null, user, { status: true, message: 'Logged in sucessfully' });
     }
   )
 );

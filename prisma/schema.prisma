@@ -29,17 +29,17 @@ model users {
   password                         String     @db.VarChar(70)
   birth_date                       DateTime   @db.Date
   phone_number                     String     @db.VarChar(20)
-  doc_country                      String     @db.VarChar(35)
-  doc_number                       String     @db.VarChar(20) @unique
+  cpf                              String     @db.VarChar(20) @unique
   adress                           String     @db.VarChar(95)
   city                             String     @db.VarChar(35)
   state                            String     @db.VarChar(35)
-  country                          String     @db.VarChar(35)
   zip                              String     @db.VarChar(20)
+  status                           Boolean    @default(false)
+  tokens                           confirmation_tokens[]
   user_types                       user_types @relation(fields: [type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
   organs_organs_donorTousers       organs[]   @relation("organs_donorTousers")
   organs_organs_institutionTousers organs[]   @relation("organs_institutionTousers")
-
+ 
   @@index([type], map: "type")
 }
 
@@ -53,4 +53,12 @@ model user_types {
   id        Int     @id @default(autoincrement())
   name      String  @db.VarChar(30)
   users     users[]
+}
+
+model confirmation_tokens {
+  id          Int         @id @default(autoincrement())
+  token       String      @db.VarChar(50)
+  expiration  DateTime    @db.Date
+  user_id     Int
+  user        users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)     
 }

@@ -17,6 +17,7 @@
     "debug": "~2.6.9",
     "dotenv": "^16.0.3",
     "ejs": "^3.1.8",
+    "email-verification": "^0.4.6",
     "express": "~4.16.1",
     "express-flash": "^0.0.2",
     "express-session": "^1.17.3",
