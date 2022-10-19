@@ -3,7 +3,7 @@ const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-router.post('/', async (req, res) => {
+router.post('/register/typeOrgan', async (req, res) => {
   const { name } = req.body;
 
   if (!name) {

@@ -7,12 +7,12 @@ dotenv.config();
 
 var router = express.Router();
 
-/* GET login page. */
+/* GET login page */
 router.get('/login', function (req, res, next) {
   res.render('login', { message: "" });
 });
 
-/** Check login details */
+/* Check login details */
 router.post('/auth',
 async (req, res, next) => {
   passport.authenticate(
@@ -44,10 +44,10 @@ async (req, res, next) => {
 );
 
 /* Accessible page with logged in user only */
-router.get('/sucess', 
+router.get('/success', 
   passport.authenticate('jwt', { session: false }), 
   function(req, res) {
-    res.status(200).json({ message: 'Pagina acessivel com login'});
+    res.status(200).json({ message: 'Página acessível com login'});
   }
 );
 
