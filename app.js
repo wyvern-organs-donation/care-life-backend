@@ -32,9 +32,6 @@ app.use(sessions({
 
 app.use(indexRouter);
 app.use(loginRouter);
-app.use(confirmRegistrationRouter);
-
-app.use(routes);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
