@@ -8,7 +8,7 @@ var sessions = require('express-session')
 var indexRouter = require('./src/routes/home');
 var registerTypeUserRouter = require('./src/routes/registerTypeUser');
 var registerTypeOrganRouter = require('./src/routes/registerTypeOrgan');
-var registerOrganRouter = require('./src/routes/registerOrgan');
+
 var loginRouter = require('./src/routes/login');
 const routes = require('./src/routes');
 
@@ -36,7 +36,6 @@ app.use(sessions({
 app.use(indexRouter);
 app.use(registerTypeUserRouter);
 app.use(registerTypeOrganRouter);
-app.use(registerOrganRouter);
 app.use(loginRouter);
 
 app.use(routes);
