@@ -83,7 +83,7 @@ class TypeOrganController {
               data: {
                   organ_types: {
                       connect: {
-                          id: type_name
+                        type_name: type_name
                       }
                   },
               },
