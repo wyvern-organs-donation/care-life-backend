@@ -1,7 +1,10 @@
 const { PrismaClient, Prisma } = require('@prisma/client');
-const { hash } = require('../controllers/hashPassword');
+const { hash } = require('./HashPassword');
 const crypto = require('crypto');
-const sendConfirmationEmail = require('../controllers/registrationController')
+const nodemailer = require('nodemailer');
+
+const dotenv = require('dotenv');
+dotenv.config();
 
 const prismaClient = new PrismaClient();
 
@@ -18,6 +21,30 @@ const userSelect = {
     state: true,
     zip: true
 };
+
+const sendConfirmationEmail = async  (user, token, req) => {
+  var transport = nodemailer.createTransport({
+      host: "smtp.mailtrap.io",
+      port: 2525,
+      auth: {
+          user: process.env.EMAIL_USER,
+          pass: process.env.EMAIL_PASS
+      }
+  });
+
+  var message = {
+      from: "norepley@wyver.com.br",
+      to: user.email,
+      subject: "Confirmação de cadastro - Wyver",
+      text: `Prezado(a) ${user.name}. \n\nBem-vindo(a) à Wyver! \n\nClique no link abaixo para confirmar seu e-mail e concluir seu cadastro: \nhttp://${req.headers.host}/user/confirmation/${user.id}/${token.token} \n\nEste link tem validade de 24h. Recomendamos que você realize a confirmação assim que receber este e-mail.`,
+      html: `Prezado(a) ${user.name}. <br><br>Bem-vindo(a) à Wyver!<br><br>Clique no link abaixo para confirmar seu e-mail e concluir seu cadastro:<br> <a href='http://${req.headers.host}/user/confirmation/${user.id}/${token.token}'> Clique aqui </a><br><br>Este link tem validade de 24h. Recomendamos que você realize a confirmação assim que receber este e-mail.`
+  };
+
+  transport.sendMail(message, function (err) {
+      if (err) console.log(err)
+      return err
+  })
+}
 
 class UserController {
     async getAllUsers(req, res) {
@@ -117,8 +144,7 @@ class UserController {
           }
         })
     
-        
-        await sendConfirmationEmail(user, token, req)
+        await sendConfirmationEmail(user, token, req);
         
         res.status(200).json({ message: 'User successfully registered!', user });
       } catch (error) {
@@ -209,8 +235,43 @@ class UserController {
             }
         });
 
-        return res.status(204).send(user);
+        return res.status(200).json("User successfully deleted!");
+    }
+
+    async confirmRegistration (req, res, next) {
+      var token = await prismaClient.confirmation_tokens.findFirst({ where: {token: req.params.token} })
+          // token is not found into database i.e. token may have expired 
+      if (!token){
+          return res.status(400).json({message:'Invalid token.'});
+      }
+      if (token.expiration < new Date()){
+          return res.status(400).json({message:'Your verification link may have expired. Please click on resend for verify your Email.'});
+      }
+      // if token is found then check valid user 
+      else{
+        var user = await prismaClient.users.findFirst({ where: {id: parseInt(req.params.id), tokens: {every: {token: req.params.token} }}})
+        // not valid user
+        if (!user){
+            return res.status(401).json({message: 'We were unable to find a user for this verification. Please SignUp!'});
+        } 
+        // user is already verified
+        else if (user.status){
+            return res.status(200).json({message: 'User has been already verified. Please Login'});
+        }
+        // verify user
+        else{
+            // change isVerified to true
+            user =  await prismaClient.users.update({ 
+                where: {
+                    id: parseInt(req.params.id)
+                }, data: {
+                    status: true
+                } 
+            });
+            return res.status(200).json({message: 'Email has been confirmed sucessfully'});
+        }
+      }
     }
 }
 
-module.exports = { userSelect, UserController };
+module.exports = { userSelect, UserController, sendConfirmationEmail };

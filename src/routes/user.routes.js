@@ -9,5 +9,6 @@ userRoutes.get("/:id", userController.getUserById);
 userRoutes.post("/", userController.createUser);
 userRoutes.put("/:id", userController.updateUser);
 userRoutes.delete("/:id", userController.deleteUser);
+userRoutes.get("/confirmation/:id/:token", userController.confirmRegistration);
 
 module.exports = { userRoutes };

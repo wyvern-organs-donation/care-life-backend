@@ -1,6 +1,6 @@
 var express = require('express');
 const jwt = require('jsonwebtoken');
-const passport = require('../controllers/authenticationController');
+const passport = require('../controllers/AuthenticationController');
 
 const dotenv = require('dotenv');
 dotenv.config();
