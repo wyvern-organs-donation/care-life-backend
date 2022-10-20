@@ -144,7 +144,7 @@ class OrganController {
                 id
             }
         })
-        return res.status(204).json({ message: 'Successfully deleted' })
+        return res.status(200).json({ message: 'Successfully deleted' })
     }
 }
 
