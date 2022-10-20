@@ -43,11 +43,11 @@ class OrganController {
 
 
         if (!type_id) {
-            return res.status(422).json({ message: 'Type user is required!' });
+            return res.status(422).json({ message: 'Type organ is required!' });
           }
 
         if (!donor_id) {
-            return res.status(422).json({ message: 'Dono is required!' });
+            return res.status(422).json({ message: 'Donor is required!' });
           }
         
           if (!institution_id) {
@@ -77,7 +77,7 @@ class OrganController {
         })
 
 
-        res.status(200).json({ message: 'User successfully registered!', organ})
+        res.status(200).json({ message: 'Organ successfully registered!', organ})
     } catch (error) {
         console.log(error)
     } finally {
@@ -144,7 +144,7 @@ class OrganController {
                 id
             }
         })
-        return res.status(204).send(organ)
+        return res.status(204).json({ message: 'Successfully deleted' })
     }
 }
 
