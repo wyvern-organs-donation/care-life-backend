@@ -4,7 +4,7 @@ const prismaClient = new PrismaClient();
 
 const typeUserSelect = {
     id: true,
-    type_name: true,
+    name: true,
 };
 
 class TypeUserController {
@@ -30,40 +30,27 @@ class TypeUserController {
             return res.status(400).json("The user type could not be found.");
         }
 
-        return res.status(200).json(user);
+        return res.status(200).json(typeUser);
     }
 
     async createTypeUser(req, res) {
       const {
-        type_name,
+        name,
       } = req.body;
     
-      if (!type_name) {
-        return res.status(422).json({ message: 'Type is required!' });
+      if (!name) {
+        return res.status(422).json({ message: 'Name is required!' });
       }
 
       try {
         const typeUser = await prismaClient.typeUsers.create({
           data: {
-            type_name,
-            user_types: {
-              connect: {
-                id: type_id,
-              },
-            },
+            name
           },
         });
         res.status(200).json({ message: 'User type successfully registered!', typeUser });
       } catch (error) {
         console.log(error);
-        if (error instanceof Prisma.PrismaClientKnownRequestError) {
-          // The .code property can be accessed in a type-safe manner
-          if (error.code === 'P2002') {
-            if (error.meta.target === 'type_name') {
-              res.status(400).json({ message: 'already have a registration with this type.'});
-            }
-          }
-        }
       } finally {
         async () => {
           await prismaClient.$disconnect();
@@ -75,7 +62,7 @@ class TypeUserController {
     async updateTypeUser(req, res) {
         const id = +req.params.id;
         const {
-            type_name,
+            name,
           } = req.body;
         
         try {
@@ -90,12 +77,7 @@ class TypeUserController {
                     id
                 },
                 data: {
-                    type_name,
-                    user_types: {
-                      connect: {
-                        id: type_id,
-                      },
-                    },
+                    name
                 },
                 select: typeUserSelect
             });
@@ -120,7 +102,7 @@ class TypeUserController {
             }
         });
 
-        return res.status(204).send(typeUser);
+        return res.status(200).json("User type successfully deleted!");
     }
 }
 

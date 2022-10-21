@@ -4,7 +4,7 @@ const prismaClient = new PrismaClient();
 
 const typeOrganSelect = {
   id: true,
-  type_name: true,
+  name: true,
 }
 
 class TypeOrganController {
@@ -26,7 +26,7 @@ class TypeOrganController {
           select: typeOrganSelect
       })
 
-      if (!organ) {
+      if (!typeOrgan) {
           return res.status(400).json("The organ type could not be found.");
       }
 
@@ -34,22 +34,18 @@ class TypeOrganController {
   }
   async createTypeOrgan (req,res) {
       const {
-          type_name
+          name
       } = req.body
 
 
-      if (!type_name) {
-          return res.status(422).json({ message: 'Organ type is required!' });
+      if (!name) {
+          return res.status(422).json({ message: 'Organ type name is required!' });
         }
 
   try {
       const typeOrgan = await prismaClient.typeOrgans.create({
           data: {
-              organ_types: {
-                  connect: {
-                      id: type_id
-                  }
-              },
+              name:name
           }
       })
 
@@ -66,7 +62,7 @@ class TypeOrganController {
   async updateTypeOrgan(req, res) {
       const id = +req.params.id;
       const {
-          type_name
+          name
         } = req.body;
       
       try {
@@ -81,11 +77,7 @@ class TypeOrganController {
                   id
               },
               data: {
-                  organ_types: {
-                      connect: {
-                        id: type_id
-                      }
-                  },
+                  name:name
               },
               select: typeOrganSelect
           });
@@ -109,7 +101,7 @@ class TypeOrganController {
               id
           }
       })
-      return res.status(204).send(typeOrgans)
+      return res.status(200).json("Organ type successfully deleted!")
   }
 }
 
