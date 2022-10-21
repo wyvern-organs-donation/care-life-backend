@@ -9,6 +9,28 @@ const organSelect = {
     institution: true
 }
 
+const organAllFieldsSelect = {
+    id: true, 
+    organ_types: {
+        select: {
+            id: true,
+            name: true,
+        },
+    },
+    users_organs_donorTousers: {
+        select: {
+            id: true,
+            name: true,
+        }
+    },
+    users_organs_institutionTousers: {
+        select: {
+            id: true,
+            name: true,
+        }
+    }
+}
+
 class OrganController {
     async getAllOrgans(req,res) {
         const organs = await prismaClient.organs.findMany({
@@ -45,10 +67,10 @@ class OrganController {
                 type: organTypeId != null ? parseInt(organTypeId) : undefined,
                 institution: instututionId != null ?  parseInt(instututionId) : undefined,
             },
-            select: organSelect
+            select: organAllFieldsSelect
         })
 
-        if (!organs) {
+        if (organs.length < 1) {
             return res.status(400).json("This filter didn't return any organ.");
         }
 

@@ -72,6 +72,25 @@ class UserController {
         return res.status(200).json(user);
     }
 
+    // filter by user type
+    async filterUser(req,res) {
+      const userTypeId = req.query.user_type_id;
+      
+
+      const users = await prismaClient.users.findMany({
+          where: {
+              type: userTypeId != null ? parseInt(userTypeId) : undefined,
+          },
+          select: userSelect
+      })
+
+      if (users.length < 1) {
+          return res.status(400).json("This filter didn't return any user.");
+      }
+
+      return res.status(200).json(users)
+  }
+
     async createUser(req, res) {
       const {
         name,
