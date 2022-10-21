@@ -1,5 +1,5 @@
 var passport = require('passport');
-const { compare } = require('../controllers/hashPassword');
+const { compare } = require('./HashPassword');
 const { PrismaClient } = require('@prisma/client');
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;

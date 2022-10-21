@@ -10,8 +10,16 @@ const USER_TYPES = [
 ]
 
 const ORGAN_TYPES = [
-    "Orgãos",
-    "Tecido",
+    "Coração",
+    "Fígado",
+    "Rim",
+    "Pulmão",
+    "Medula ossea",
+    "Pâncreas",
+    "Córnea",
+    "Pele",
+
+
 ]
 
 /**

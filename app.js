@@ -10,7 +10,6 @@ var registerTypeUserRouter = require('./src/routes/registerTypeUser');
 var registerTypeOrganRouter = require('./src/routes/registerTypeOrgan');
 
 var loginRouter = require('./src/routes/login');
-var confirmRegistrationRouter = require('./src/routes/confirmRegistration')
 const routes = require('./src/routes');
 
 var app = express();
@@ -38,7 +37,6 @@ app.use(indexRouter);
 app.use(registerTypeUserRouter);
 app.use(registerTypeOrganRouter);
 app.use(loginRouter);
-app.use(confirmRegistrationRouter);
 
 app.use(routes);
 

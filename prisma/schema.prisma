@@ -60,5 +60,5 @@ model confirmation_tokens {
   token       String      @db.VarChar(50)
   expiration  DateTime    @db.Date
   user_id     Int
-  user        users      @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)     
+  user        users      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)     
 }
