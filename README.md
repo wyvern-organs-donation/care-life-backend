@@ -21,14 +21,43 @@ Para essa próxima etapa é necessário ter o arquivo [`.env` configurado](https
 
 ```
     mysql://USER:PASSWORD@HOST:PORT/DATABASE
+    SECRET="SECRET"
+    EMAIL_USER="mailtrap_user"
+    EMAIL_PASS="mailtrap_pass"
+```
+* Utilizamos o [mailtrap](https://mailtrap.io/) como servidor de envio de emails.
+
+Logo após a instalação, utilizamos o `npx prisma migrate dev` para criar as tabelas do nosso banco. 
+```
+    npx prisma migrate dev
 ```
 
-Logo após a instalação, utilizamos o `npx prisma generate` para inicilizar e gerar um cliente prisma. 
+Em seguida, utilizamos o `npx prisma generate` para inicilizar e gerar um cliente prisma. 
 ```
     npx prisma generate
+```
+
+Para popular o Banco de dados, utilizamos o `npx prisma db seed`. 
+```
+    npx prisma db seed
+```
+
+O usuario padrão gerado é:
+```
+nome: Admin
+email: admin@carelife.com
+senha: admin
+```
+
+Para gerar a documentação do Swagger, utilizamos o `npm run swagger-autogen`. 
+```
+    npm run swagger-autogen
 ```
 
 E, por fim, usamos o `npm start` para iniciar o servidor em modo de desenvolvimento  no endereço: [http://localhost:3000](http://localhost:3000)
 ```
     npm start
 ```
+
+Para acessar a documentação do Swagger e testar a API basta acessar:
+http://localhost:3000/doc
