@@ -31,6 +31,7 @@ Logo após a instalação, utilizamos o `npx prisma migrate dev` para criar as t
 ```
     npx prisma migrate dev
 ```
+Para essa próxima etapa é necessário ter o arquivo `.env` configurado (utilizar o .env.example como base).
 
 Em seguida, utilizamos o `npx prisma generate` para inicilizar e gerar um cliente prisma. 
 ```
