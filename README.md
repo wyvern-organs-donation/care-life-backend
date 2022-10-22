@@ -17,11 +17,7 @@ Utilizamos o `npm install` para instalar todas as depedências utilizadas no pro
 ```
     npm install 
 ```
-Para essa próxima etapa é necessário ter o arquivo [`.env` configurado](https://www.prisma.io/docs/concepts/database-connectors/mysql).
-
-```
-    mysql://USER:PASSWORD@HOST:PORT/DATABASE
-```
+Para essa próxima etapa é necessário ter o arquivo `.env` configurado (utilizar o .env.example como base).
 
 Logo após a instalação, utilizamos o `npx prisma generate` para inicilizar e gerar um cliente prisma. 
 ```
