@@ -1,12 +1,14 @@
+var http = require('http');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var passport = require('passport');
 var sessions = require('express-session')
+const PORT = process.env.PORT || 3000
+
 
 var indexRouter = require('./src/routes/home');
-
 var loginRouter = require('./src/routes/login');
 const routes = require('./src/routes');
 
@@ -33,8 +35,10 @@ app.use(sessions({
 
 app.use(indexRouter);
 app.use(loginRouter);
-
 app.use(routes);
+
+http.createServer(app).listen(PORT, () => console.log("Servidor rodando local na porta %s",PORT));
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

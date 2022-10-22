@@ -1,9 +1,9 @@
 {
-  "name": "myapp",
+  "name": "wyver",
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon server.js"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
