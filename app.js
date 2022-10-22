@@ -6,8 +6,6 @@ var passport = require('passport');
 var sessions = require('express-session')
 
 var indexRouter = require('./src/routes/home');
-var registerTypeUserRouter = require('./src/routes/registerTypeUser');
-var registerTypeOrganRouter = require('./src/routes/registerTypeOrgan');
 
 var loginRouter = require('./src/routes/login');
 const routes = require('./src/routes');
@@ -34,8 +32,6 @@ app.use(sessions({
 }));
 
 app.use(indexRouter);
-app.use(registerTypeUserRouter);
-app.use(registerTypeOrganRouter);
 app.use(loginRouter);
 
 app.use(routes);
