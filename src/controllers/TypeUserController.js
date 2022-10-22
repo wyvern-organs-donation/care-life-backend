@@ -9,7 +9,7 @@ const typeUserSelect = {
 
 class TypeUserController {
     async getAllTypeUsers(req, res) {
-        const typeUsers = await prismaClient.typeUsers.findMany({
+        const typeUsers = await prismaClient.user_types.findMany({
             select: typeUserSelect
         });
 
@@ -19,7 +19,7 @@ class TypeUserController {
     async getTypeUserById(req, res) {
         const id = +req.params.id;
 
-        const typeUser = await prismaClient.typeUsers.findUnique({
+        const typeUser = await prismaClient.user_types.findUnique({
             where: {
                 id
             },
@@ -43,7 +43,7 @@ class TypeUserController {
       }
 
       try {
-        const typeUser = await prismaClient.typeUsers.create({
+        const typeUser = await prismaClient.user_types.create({
           data: {
             name
           },
@@ -66,13 +66,13 @@ class TypeUserController {
           } = req.body;
         
         try {
-            const typeUserExist = await prismaClient.typeUsers.findUnique({ where: { id } });
+            const typeUserExist = await prismaClient.user_types.findUnique({ where: { id } });
             
             if (!typeUserExist) {
                 return res.status(400).json("The type could not be found.");
             }
             
-            const typeUser = await prismaClient.typeUsers.update({
+            const typeUser = await prismaClient.user_types.update({
                 where: {
                     id
                 },
@@ -90,13 +90,13 @@ class TypeUserController {
     async deleteTypeUser(req, res) {
         const id = +req.params.id;
 
-        const typeUserExist = await prismaClient.typeUsers.findUnique({ where: { id } });
+        const typeUserExist = await prismaClient.user_types.findUnique({ where: { id } });
 
         if (!typeUserExist) {
             return res.status(400).json("The type could not be found.");
         }
 
-        const typeUser = await prismaClient.typeUsers.delete({
+        const typeUser = await prismaClient.user_types.delete({
             where: {
                 id
             }

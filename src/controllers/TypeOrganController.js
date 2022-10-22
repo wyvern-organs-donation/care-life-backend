@@ -9,7 +9,7 @@ const typeOrganSelect = {
 
 class TypeOrganController {
   async getAllTypeOrgans(req,res) {
-      const typeOrgans = await prismaClient.typeOrgans.findMany({
+      const typeOrgans = await prismaClient.organ_types.findMany({
           select: typeOrganSelect
       })
 
@@ -19,7 +19,7 @@ class TypeOrganController {
   async getTypeOrganById(req,res) {
       const id = +req.params.id;
 
-      const typeOrgan = await prismaClient.typeOrgans.findUnique({
+      const typeOrgan = await prismaClient.organ_types.findUnique({
           where: {
               id
           },
@@ -43,7 +43,7 @@ class TypeOrganController {
         }
 
   try {
-      const typeOrgan = await prismaClient.typeOrgans.create({
+      const typeOrgan = await prismaClient.organ_types.create({
           data: {
               name:name
           }
@@ -66,13 +66,13 @@ class TypeOrganController {
         } = req.body;
       
       try {
-          const typeOrganExist = await prismaClient.typeOrgans.findUnique({ where: { id } });
+          const typeOrganExist = await prismaClient.organ_types.findUnique({ where: { id } });
           
           if (!typeOrganExist) {
               return res.status(400).json("The organ type could not be found.");
           }
           
-          const typeOrgan = await prismaClient.typeOrgans.update({
+          const typeOrgan = await prismaClient.organ_types.update({
               where: {
                   id
               },
@@ -90,13 +90,13 @@ class TypeOrganController {
   async deleteTypeOrgan(req,res) {
       const id = +req.params.id
 
-      const typeOrganExist = await prismaClient.typeOrgans.findUnique( { where: { id }})
+      const typeOrganExist = await prismaClient.organ_types.findUnique( { where: { id }})
 
       if (!typeOrganExist) {
           return res.status(400).json("The organ type could not be found.");
       }
 
-      const typeOrgans = await prismaClient.typeOrgans.delete({
+      const typeOrgans = await prismaClient.organ_types.delete({
           where: {
               id
           }
