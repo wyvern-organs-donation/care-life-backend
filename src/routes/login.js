@@ -14,6 +14,17 @@ router.get('/login', function (req, res, next) {
 
 /* Check login details */
 router.post('/auth',
+// #swagger.tags = ['Login']
+// #swagger.description = 'Endpoint realizar autenticação.'
+
+/* #swagger.parameters['email'] = {
+    description: 'Email do usuário.',
+    type: 'string'
+} */
+/* #swagger.parameters['password'] = {
+    description: 'Senha do usuário.',
+    type: 'string'
+} */
 async (req, res, next) => {
   passport.authenticate(
     'local',
@@ -40,18 +51,12 @@ async (req, res, next) => {
       }
     }
   )(req, res, next);
-}
-);
-
-/* Accessible page with logged in user only */
-router.get('/success', 
-  passport.authenticate('jwt', { session: false }), 
-  function(req, res) {
-    res.status(200).json({ message: 'Página acessível com login'});
-  }
-);
+});
 
 router.get('/logout', (req, res, next) => {
+  // #swagger.tags = ['Login']
+  // #swagger.description = 'Endpoint realizar logout.'
+
   req.logout(function (err) {
     if (err) {
       return next(err);

@@ -30,10 +30,10 @@ model users {
   birth_date                       DateTime   @db.Date
   phone_number                     String     @db.VarChar(20)
   cpf                              String     @db.VarChar(20) @unique
-  adress                           String     @db.VarChar(95)
-  city                             String     @db.VarChar(35)
-  state                            String     @db.VarChar(35)
-  zip                              String     @db.VarChar(20)
+  adress                           String?     @db.VarChar(95)
+  city                             String?     @db.VarChar(35)
+  state                            String?     @db.VarChar(35)
+  zip                              String?    @db.VarChar(20)
   status                           Boolean    @default(false)
   tokens                           confirmation_tokens[]
   user_types                       user_types @relation(fields: [type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")

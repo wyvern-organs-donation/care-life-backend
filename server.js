@@ -1,6 +1,8 @@
 var http = require('http');
 var createError = require('http-errors');
 var express = require('express');
+const swaggerUi = require('swagger-ui-express')
+const swaggerFile = require('./swagger_output.json')
 var path = require('path');
 var logger = require('morgan');
 var passport = require('passport');
@@ -39,6 +41,7 @@ app.use(routes);
 
 http.createServer(app).listen(PORT, () => console.log("Servidor rodando local na porta %s",PORT));
 
+app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
