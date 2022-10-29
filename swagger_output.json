@@ -33,13 +33,6 @@
     }
   ],
   "paths": {
-    "/login": {
-      "get": {
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
     "/auth": {
       "post": {
         "tags": [
@@ -131,101 +124,66 @@
           "User"
         ],
         "description": "Endpoint para criar um usuário.",
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Nome do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "email",
-            "description": "Email do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "birth_date",
-            "description": "Data de nascimento do usuário.",
-            "required": true,
-            "format": "AAAA-MM-DD",
-            "in": "query",
-            "schema": {
-              "type": "Date"
-            }
-          },
-          {
-            "name": "type_id",
-            "description": "ID do tipo do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "cpf",
-            "description": "CPF do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "adress",
-            "description": "Endereço do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "city",
-            "description": "Cidade do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "state",
-            "description": "Estado do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "zip",
-            "description": "CEP do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {},
         "security": [
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "birth_date",
+                  "type_id",
+                  "cpf",
+                  "phone_number"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "birth_date": {
+                    "type": "string"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  },
+                  "type_id": {
+                    "type": "number"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "adress": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "zip": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/user/{id}": {
@@ -266,93 +224,6 @@
               "type": "string"
             },
             "description": "ID do usuário."
-          },
-          {
-            "name": "name",
-            "description": "Nome do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "email",
-            "description": "Email do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "description": "Senha do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "birth_date",
-            "description": "Data de nascimento do usuário.",
-            "required": true,
-            "format": "AAAA-MM-DD",
-            "in": "query",
-            "schema": {
-              "type": "Date"
-            }
-          },
-          {
-            "name": "type_id",
-            "description": "ID do tipo do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "cpf",
-            "description": "CPF do usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "adress",
-            "description": "Endereço do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "city",
-            "description": "Cidade do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "state",
-            "description": "Estado do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "zip",
-            "description": "CEP do usuário.",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {},
@@ -360,7 +231,60 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name",
+                  "email",
+                  "password",
+                  "birth_date",
+                  "type_id",
+                  "cpf",
+                  "phone_number"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "birth_date": {
+                    "type": "string"
+                  },
+                  "phone_number": {
+                    "type": "string"
+                  },
+                  "type_id": {
+                    "type": "number"
+                  },
+                  "cpf": {
+                    "type": "string"
+                  },
+                  "adress": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  },
+                  "zip": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -471,41 +395,38 @@
           "Organ"
         ],
         "description": "Endpoint para criar um orgão.",
-        "parameters": [
-          {
-            "name": "type_id",
-            "description": "ID do tipo do orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "donor_id",
-            "description": "ID do doador do orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "institution_id",
-            "description": "ID da instituição do orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {},
         "security": [
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "type_id",
+                  "donor_id",
+                  "institution_id"
+                ],
+                "properties": {
+                  "type_id": {
+                    "type": "number"
+                  },
+                  "donor_id": {
+                    "type": "number"
+                  },
+                  "institution_id": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/organ/{id}": {
@@ -544,34 +465,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "type_id",
-            "description": "ID do tipo do orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "donor_id",
-            "description": "ID do doador do orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
-          },
-          {
-            "name": "institution_id",
-            "description": "ID da instituição do orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "number"
-            }
+            },
+            "description": "ID do orgão."
           }
         ],
         "responses": {},
@@ -579,7 +474,32 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "type_id",
+                  "donor_id",
+                  "institution_id"
+                ],
+                "properties": {
+                  "type_id": {
+                    "type": "number"
+                  },
+                  "donor_id": {
+                    "type": "number"
+                  },
+                  "institution_id": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -624,23 +544,30 @@
           "TypeOrgan"
         ],
         "description": "Endpoint para criar um tipo de orgão.",
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Nome do tipo de orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {},
         "security": [
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/typeOrgan/{id}": {
@@ -679,16 +606,8 @@
             "required": true,
             "schema": {
               "type": "string"
-            }
-          },
-          {
-            "name": "name",
-            "description": "Nome do tipo de orgão.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
+            },
+            "description": "ID do tipo de orgão."
           }
         ],
         "responses": {},
@@ -696,7 +615,24 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [
@@ -741,23 +677,30 @@
           "TypeUser"
         ],
         "description": "Endpoint para criar um tipo de usuário.",
-        "parameters": [
-          {
-            "name": "name",
-            "description": "Nome do tipo de usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
+        "parameters": [],
         "responses": {},
         "security": [
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/typeUser/{id}": {
@@ -798,15 +741,6 @@
               "type": "string"
             },
             "description": "ID do tipo de usuário."
-          },
-          {
-            "name": "name",
-            "description": "Nome do tipo de usuário.",
-            "required": true,
-            "in": "query",
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "responses": {},
@@ -814,7 +748,24 @@
           {
             "bearerAuth": []
           }
-        ]
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
       },
       "delete": {
         "tags": [

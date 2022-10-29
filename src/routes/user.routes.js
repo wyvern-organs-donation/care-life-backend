@@ -39,41 +39,51 @@ userRoutes.post("/",
                 /* #swagger.security = [{
                         "bearerAuth": []
                 }] */
-                /* #swagger.parameters['name'] = { 
-                                                    description: 'Nome do usuário.',
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
-                /* #swagger.parameters['email'] = { 
-                                                    description: 'Email do usuário.',
-                                                    required: true,
-                                                    type: 'string',
-                                                } */
-                /* #swagger.parameters['password'] = { 
-                                                    description: 'Senha do usuário.', 
-                                                    required: true,
-                                                    type: 'string',
-                                                } */
-                /* #swagger.parameters['birth_date'] = { 
-                                                    description: 'Data de nascimento do usuário.', 
-                                                    required: true,
-                                                    type: 'Date',
-                                                    format: 'AAAA-MM-DD'
-                                                } */
-                /* #swagger.parameters['type_id'] = { 
-                                                    description: 'ID do tipo do usuário.', 
-                                                    required: true,
-                                                    type: 'number'
-                                                } */
-                /* #swagger.parameters['cpf'] = { 
-                                                    description: 'CPF do usuário.', 
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
-                // #swagger.parameters['adress'] = { description: 'Endereço do usuário.' }
-                // #swagger.parameters['city'] = { description: 'Cidade do usuário.' }
-                // #swagger.parameters['state'] = { description: 'Estado do usuário.' }
-                // #swagger.parameters['zip'] = { description: 'CEP do usuário.' }
+                /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["name", "email", "password", "birth_date", "type_id", "cpf", "phone_number"], 
+                                    "properties": { 
+                                        "name":{ 
+                                                "type": "string"
+                                            } ,
+                                        "email":{ 
+                                                "type": "string" 
+                                            } ,
+                                        "password":{ 
+                                                "type": "string" 
+                                            } ,
+                                        "birth_date":{ 
+                                                "type": "string"
+                                            } ,
+                                        "phone_number":{ 
+                                                "type": "string"
+                                            } ,
+                                        "type_id":{ 
+                                                "type": "number"
+                                            } ,
+                                        "cpf":{ 
+                                                "type": "string"
+                                            } ,
+                                        "adress":{ 
+                                                "type": "string"
+                                            } ,
+                                        "city":{ 
+                                                "type": "string"
+                                            } ,
+                                        "state":{ 
+                                                "type": "string"
+                                            } ,
+                                        "zip":{ 
+                                                "type": "string"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                 userController.createUser);
 userRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                 // #swagger.tags = ['User']
@@ -82,41 +92,51 @@ userRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                         "bearerAuth": []
                 }] */
                 /* #swagger.parameters['id'] = { description: 'ID do usuário.' }
-                /* #swagger.parameters['name'] = { 
-                                                    description: 'Nome do usuário.',
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
-                /* #swagger.parameters['email'] = { 
-                                                    description: 'Email do usuário.',
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
-                /* #swagger.parameters['password'] = { 
-                                                    description: 'Senha do usuário.', 
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
-                /* #swagger.parameters['birth_date'] = { 
-                                                    description: 'Data de nascimento do usuário.', 
-                                                    required: true,
-                                                    type: 'Date',
-                                                    format: 'AAAA-MM-DD'
-                                                } */
-                /* #swagger.parameters['type_id'] = { 
-                                                    description: 'ID do tipo do usuário.', 
-                                                    required: true,
-                                                    type: 'number'
-                                                } */
-                /* #swagger.parameters['cpf'] = { 
-                                                    description: 'CPF do usuário.', 
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
-                // #swagger.parameters['adress'] = { description: 'Endereço do usuário.' }
-                // #swagger.parameters['city'] = { description: 'Cidade do usuário.' }
-                // #swagger.parameters['state'] = { description: 'Estado do usuário.' }
-                // #swagger.parameters['zip'] = { description: 'CEP do usuário.' }
+                /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["name", "email", "password", "birth_date", "type_id", "cpf", "phone_number"], 
+                                    "properties": { 
+                                        "name":{ 
+                                                "type": "string"
+                                            } ,
+                                        "email":{ 
+                                                "type": "string" 
+                                            } ,
+                                        "password":{ 
+                                                "type": "string" 
+                                            } ,
+                                        "birth_date":{ 
+                                                "type": "string"
+                                            } ,
+                                        "phone_number":{ 
+                                                "type": "string"
+                                            } ,
+                                        "type_id":{ 
+                                                "type": "number"
+                                            } ,
+                                        "cpf":{ 
+                                                "type": "string"
+                                            } ,
+                                        "adress":{ 
+                                                "type": "string"
+                                            } ,
+                                        "city":{ 
+                                                "type": "string"
+                                            } ,
+                                        "state":{ 
+                                                "type": "string"
+                                            } ,
+                                        "zip":{ 
+                                                "type": "string"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                 userController.updateUser);
 userRoutes.delete("/:id", passport.authenticate('jwt', { session: false }),
                 // #swagger.tags = ['User']

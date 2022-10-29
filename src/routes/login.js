@@ -7,11 +7,6 @@ dotenv.config();
 
 var router = express.Router();
 
-/* GET login page */
-router.get('/login', function (req, res, next) {
-  res.render('login', { message: "" });
-});
-
 /* Check login details */
 router.post('/auth',
 // #swagger.tags = ['Login']
@@ -41,7 +36,7 @@ async (req, res, next) => {
             if (error) return next(error);
 
             const body = { _id: user._id, email: user.email };
-            const token = jwt.sign({ user: body }, process.env.SECRET, { expiresIn: '120s' });
+            const token = jwt.sign({ user: body }, process.env.SECRET, { expiresIn: '24h' });
 
             return res.status(200).json({info, user:user.email, token: token });
           }
