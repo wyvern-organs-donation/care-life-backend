@@ -26,11 +26,21 @@ typeUserRoutes.post("/", passport.authenticate('jwt', { session: false }),
                     /* #swagger.security = [{
                         "bearerAuth": []
                     }] */
-                    /* #swagger.parameters['name'] = { 
-                                                    description: 'Nome do tipo de usuário.',
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
+                    /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["name"], 
+                                    "properties": { 
+                                        "name":{ 
+                                                "type": "string"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                     typeUserController.createTypeUser);
 typeUserRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                     // #swagger.tags = ['TypeUser']
@@ -39,11 +49,21 @@ typeUserRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                         "bearerAuth": []
                     }] */
                     /* #swagger.parameters['id'] = { description: 'ID do tipo de usuário.' }
-                    /* #swagger.parameters['name'] = { 
-                                                    description: 'Nome do tipo de usuário.',
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
+                    /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["name"], 
+                                    "properties": { 
+                                        "name":{ 
+                                                "type": "string"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                     typeUserController.updateTypeUser);
 typeUserRoutes.delete("/:id", passport.authenticate('jwt', { session: false }),
                     // #swagger.tags = ['TypeUser']

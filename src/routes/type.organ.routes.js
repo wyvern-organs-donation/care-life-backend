@@ -26,11 +26,21 @@ typeOrganRoutes.post("/", passport.authenticate('jwt', { session: false }),
                     /* #swagger.security = [{
                         "bearerAuth": []
                     }] */
-                    /* #swagger.parameters['name'] = { 
-                                                    description: 'Nome do tipo de orgão.',
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
+                    /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["name"], 
+                                    "properties": { 
+                                        "name":{ 
+                                                "type": "string"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                     typeOrganController.createTypeOrgan);
 typeOrganRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                     // #swagger.tags = ['TypeOrgan']
@@ -38,11 +48,22 @@ typeOrganRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                     /* #swagger.security = [{
                         "bearerAuth": []
                     }] */
-                    /* #swagger.parameters['name'] = { 
-                                                    description: 'Nome do tipo de orgão.',
-                                                    required: true,
-                                                    type: 'string'
-                                                } */
+                    // #swagger.parameters['id'] = { description: 'ID do tipo de orgão.' }
+                    /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["name"], 
+                                    "properties": { 
+                                        "name":{ 
+                                                "type": "string"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                     typeOrganController.updateTypeOrgan);
 typeOrganRoutes.delete("/:id", passport.authenticate('jwt', { session: false }),
                     // #swagger.tags = ['TypeOrgan']

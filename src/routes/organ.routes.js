@@ -45,21 +45,27 @@ organRoutes.post("/", passport.authenticate('jwt', { session: false }),
                 /* #swagger.security = [{
                     "bearerAuth": []
                 }] */
-                /* #swagger.parameters['type_id'] = { 
-                                                    description: 'ID do tipo do orgão.',
-                                                    required: true,
-                                                    type: 'number'
-                                                } */
-                /* #swagger.parameters['donor_id'] = { 
-                                                    description: 'ID do doador do orgão.',
-                                                    required: true,
-                                                    type: 'number',
-                                                } */
-                /* #swagger.parameters['institution_id'] = { 
-                                                    description: 'ID da instituição do orgão.', 
-                                                    required: true,
-                                                    type: 'number',
-                                                } */
+                 /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["type_id", "donor_id", "institution_id"], 
+                                    "properties": { 
+                                        "type_id":{ 
+                                                "type": "number"
+                                            } ,
+                                        "donor_id":{ 
+                                                "type": "number"
+                                            } ,
+                                        "institution_id":{ 
+                                                "type": "number"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                 organController.createOrgan);
 organRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                 // #swagger.tags = ['Organ']
@@ -67,21 +73,28 @@ organRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                 /* #swagger.security = [{
                     "bearerAuth": []
                 }] */
-                /* #swagger.parameters['type_id'] = { 
-                                                    description: 'ID do tipo do orgão.',
-                                                    required: true,
-                                                    type: 'number'
-                                                } */
-                /* #swagger.parameters['donor_id'] = { 
-                                                    description: 'ID do doador do orgão.',
-                                                    required: true,
-                                                    type: 'number',
-                                                } */
-                /* #swagger.parameters['institution_id'] = { 
-                                                    description: 'ID da instituição do orgão.', 
-                                                    required: true,
-                                                    type: 'number',
-                                                } */
+                // #swagger.parameters['id'] = { description: 'ID do orgão.' }
+                /* #swagger.requestBody = {
+                        required: true,
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    "required": ["type_id", "donor_id", "institution_id"], 
+                                    "properties": { 
+                                        "type_id":{ 
+                                                "type": "number"
+                                            } ,
+                                        "donor_id":{ 
+                                                "type": "number"
+                                            } ,
+                                        "institution_id":{ 
+                                                "type": "number"
+                                            } ,
+                                    }
+                                }
+                            }
+                        }
+                    } */
                 organController.updateOrgan);
 organRoutes.delete("/:id", passport.authenticate('jwt', { session: false }),
                 // #swagger.tags = ['Organ']
