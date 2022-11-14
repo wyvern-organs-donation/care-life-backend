@@ -12,7 +12,7 @@ typeOrganRoutes.get("/",
                         "bearerAuth": []
                     }] */
                     typeOrganController.getAllTypeOrgans);
-typeOrganRoutes.get("/:id", passport.authenticate('jwt', { session: false }),
+typeOrganRoutes.get("/:id", passport.authenticate('admin', { session: false }),
                     // #swagger.tags = ['TypeOrgan']
                     // #swagger.description = 'Endpoint para obter um tipo de orgão.'
                     /* #swagger.security = [{
@@ -20,7 +20,7 @@ typeOrganRoutes.get("/:id", passport.authenticate('jwt', { session: false }),
                     }] */
                     // #swagger.parameters['id'] = { description: 'ID do tipo de orgão.' }
                     typeOrganController.getTypeOrganById);
-typeOrganRoutes.post("/", passport.authenticate('jwt', { session: false }),
+typeOrganRoutes.post("/", passport.authenticate('admin', { session: false }),
                     // #swagger.tags = ['TypeOrgan']
                     // #swagger.description = 'Endpoint para criar um tipo de orgão.'
                     /* #swagger.security = [{
@@ -42,7 +42,7 @@ typeOrganRoutes.post("/", passport.authenticate('jwt', { session: false }),
                         }
                     } */
                     typeOrganController.createTypeOrgan);
-typeOrganRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
+typeOrganRoutes.put("/:id", passport.authenticate('admin', { session: false }),
                     // #swagger.tags = ['TypeOrgan']
                     // #swagger.description = 'Endpoint para criar um tipo de orgão.'
                     /* #swagger.security = [{
@@ -65,7 +65,7 @@ typeOrganRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                         }
                     } */
                     typeOrganController.updateTypeOrgan);
-typeOrganRoutes.delete("/:id", passport.authenticate('jwt', { session: false }),
+typeOrganRoutes.delete("/:id", passport.authenticate('admin', { session: false }),
                     // #swagger.tags = ['TypeOrgan']
                     // #swagger.description = 'Endpoint para deletar um tipo de orgão.'
                     /* #swagger.security = [{

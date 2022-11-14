@@ -7,7 +7,7 @@ dotenv.config();
 
 var router = express.Router();
 
-/* Check login details */
+// Check login details 
 router.post('/auth',
 // #swagger.tags = ['Login']
 // #swagger.description = 'Endpoint realizar autenticação.'
