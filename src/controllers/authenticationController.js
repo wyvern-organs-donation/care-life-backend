@@ -75,6 +75,9 @@ passport.use('admin',
           where: {
             email: token.user.email,
           },
+          include: {
+            user_types: true,
+          },
         });
 
         if (!user) {
@@ -82,7 +85,7 @@ passport.use('admin',
           return done(null, false, { message: 'User not found' });
         };
 
-        if (user.type == 1) {
+        if (user.user_types.name == 'Administrador') {
           return done(null, user, { message: 'Logged in Successfully' });
         } else {
           return done(null, false, { message: 'You must be an admin to acess this page' });
@@ -108,6 +111,9 @@ passport.use('institution',
           where: {
             email: token.user.email,
           },
+          include: {
+            user_types: true,
+          },
         });
 
         if (!user) {
@@ -115,7 +121,7 @@ passport.use('institution',
           return done(null, false, { message: 'User not found' });
         };
 
-        if (user.type == 4 || user.type == 1) { //admin ou instituições
+        if (user.user_types.name == 'Instituições' || user.user_types.name == 'Administrador') { //admin ou instituições
           return done(null, user, { message: 'Logged in Successfully' });
         } else {
           return done(null, false, { message: 'You must be an institution or an admin to acess this page' });
