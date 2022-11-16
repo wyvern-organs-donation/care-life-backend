@@ -7,6 +7,7 @@ var path = require('path');
 var logger = require('morgan');
 var passport = require('passport');
 var sessions = require('express-session')
+var cors = require('cors')
 const PORT = process.env.PORT || 3000
 
 
@@ -24,6 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());  //initializes passport configuration
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors({origin: '*'}));
 
 const dotenv = require('dotenv');
 dotenv.config();

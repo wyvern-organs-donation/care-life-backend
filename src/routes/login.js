@@ -38,7 +38,7 @@ async (req, res, next) => {
             const body = { _id: user._id, email: user.email };
             const token = jwt.sign({ user: body }, process.env.SECRET, { expiresIn: '24h' });
 
-            return res.status(200).json({info, user:user.email, token: token });
+            return res.status(200).json({info, user:user, token: token });
           }
         );
       } catch (error) {
