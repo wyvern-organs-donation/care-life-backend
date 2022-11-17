@@ -208,7 +208,10 @@ class UserController {
             if (!userExist) {
                 return res.status(400).json("The user could not be found.");
             }
-            
+
+            const pass = password ? await hash(password) : userExist.password
+            const type = type_id ? type_id : userExist.type
+
             const user = await prismaClient.users.update({
                 where: {
                     id
@@ -216,20 +219,15 @@ class UserController {
                 data: {
                     name,
                     email,
-                    password: await hash(password),
+                    password: pass,
                     birth_date: new Date(birth_date),
                     phone_number,
-                    country,
                     state,
                     city,
                     adress,
                     zip,
                     cpf,
-                    user_types: {
-                      connect: {
-                        id: type_id,
-                      },
-                    },
+                    type,
                 },
                 select: userSelect
             });

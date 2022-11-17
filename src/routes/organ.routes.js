@@ -6,7 +6,7 @@ const organRoutes = Router();
 const organController = new OrganController();
 
 
-organRoutes.get("/filter", passport.authenticate('jwt', { session: false }),
+organRoutes.get("/filter", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['Organ']
                 // #swagger.description = 'Endpoint para filtrar orgãos por tipo.'
                 /* #swagger.security = [{
@@ -24,14 +24,14 @@ organRoutes.get("/filter", passport.authenticate('jwt', { session: false }),
                     type: 'number'
                 } */
                 organController.filterOrgan);
-organRoutes.get("/", passport.authenticate('jwt', { session: false }),
+organRoutes.get("/", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['Organ']
                 // #swagger.description = 'Endpoint para obter todos os orgãos.'
                 /* #swagger.security = [{
                     "bearerAuth": []
                 }] */
                 organController.getAllOrgans);
-organRoutes.get("/:id", passport.authenticate('jwt', { session: false }),
+organRoutes.get("/:id", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['Organ']
                 // #swagger.description = 'Endpoint para obter um orgão.'
                 // #swagger.parameters['id'] = { description: 'ID do orgão.' }
@@ -39,7 +39,7 @@ organRoutes.get("/:id", passport.authenticate('jwt', { session: false }),
                     "bearerAuth": []
                 }] */
                 organController.getOrganById);
-organRoutes.post("/", passport.authenticate('jwt', { session: false }),
+organRoutes.post("/", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['Organ']
                 // #swagger.description = 'Endpoint para criar um orgão.'
                 /* #swagger.security = [{
@@ -67,7 +67,7 @@ organRoutes.post("/", passport.authenticate('jwt', { session: false }),
                         }
                     } */
                 organController.createOrgan);
-organRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
+organRoutes.put("/:id", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['Organ']
                 // #swagger.description = 'Endpoint para atualizar um orgão.'
                 /* #swagger.security = [{
@@ -96,7 +96,7 @@ organRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                         }
                     } */
                 organController.updateOrgan);
-organRoutes.delete("/:id", passport.authenticate('jwt', { session: false }),
+organRoutes.delete("/:id", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['Organ']
                 // #swagger.description = 'Endpoint para deletar um orgão.'
                 /* #swagger.security = [{

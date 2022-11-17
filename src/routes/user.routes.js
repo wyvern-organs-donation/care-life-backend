@@ -5,7 +5,7 @@ const passport = require('../controllers/AuthenticationController');
 const userRoutes = Router();
 const userController = new UserController();
 
-userRoutes.get("/filter", passport.authenticate('jwt', { session: false }),
+userRoutes.get("/filter", passport.authenticate('institution',  { session: false }),
                 // #swagger.tags = ['User']
                 // #swagger.description = 'Endpoint para filtrar usuários por tipo.'
                 /* #swagger.security = [{
@@ -18,14 +18,14 @@ userRoutes.get("/filter", passport.authenticate('jwt', { session: false }),
                     type: 'number'
                 } */
                 userController.filterUser);
-userRoutes.get("/", passport.authenticate('jwt', { session: false }),
+userRoutes.get("/", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['User']
                 // #swagger.description = 'Endpoint para obter todos os usuários.'
                 /* #swagger.security = [{
                         "bearerAuth": []
                 }] */
                 userController.getAllUsers);
-userRoutes.get("/:id", passport.authenticate('jwt', { session: false }),
+userRoutes.get("/:id", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['User']
                 // #swagger.description = 'Endpoint para obter um usuário.'
                 // #swagger.parameters['id'] = { description: 'ID do usuário.' }
@@ -85,7 +85,7 @@ userRoutes.post("/",
                         }
                     } */
                 userController.createUser);
-userRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
+userRoutes.put("/:id", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['User']
                 // #swagger.description = 'Endpoint para atualizar um usuário.'
                 /* #swagger.security = [{
@@ -138,7 +138,7 @@ userRoutes.put("/:id", passport.authenticate('jwt', { session: false }),
                         }
                     } */
                 userController.updateUser);
-userRoutes.delete("/:id", passport.authenticate('jwt', { session: false }),
+userRoutes.delete("/:id", passport.authenticate('institution', { session: false }),
                 // #swagger.tags = ['User']
                 // #swagger.description = 'Endpoint para deletar um usuário.'
                 /* #swagger.security = [{

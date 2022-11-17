@@ -32,7 +32,7 @@ passport.use(
 );
 
 // This verifies that the token sent by the user is valid
-passport.use(
+passport.use('normal',
   new JwtStrategy(
     {
       secretOrKey: process.env.SECRET,
@@ -41,18 +41,20 @@ passport.use(
     async (token, done) => {
       try {
         // Find the user associated with the email provided by the user
-        const user = await prisma.users.findFirst({
+        const user = await prisma.users.findUnique({
           where: {
-            email: token.email,
+            email: token.user.email,
           },
         });
+
         if (!user) {
           // If the user isn't found in the database, return a message
           return done(null, false, { message: 'User not found' });
-        }
+        };
 
         // Send the user information to the next middleware
         return done(null, user, { message: 'Logged in Successfully' });
+        
       } catch (error) {
         done(error);
       }
@@ -60,14 +62,86 @@ passport.use(
   )
 );
 
-/* Save the session of which user is logged in*/
+passport.use('admin',
+  new JwtStrategy(
+    {
+      secretOrKey: process.env.SECRET,
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        // Find the user associated with the email provided by the user
+        const user = await prisma.users.findUnique({
+          where: {
+            email: token.user.email,
+          },
+          include: {
+            user_types: true,
+          },
+        });
+
+        if (!user) {
+          // If the user isn't found in the database, return a message
+          return done(null, false, { message: 'User not found' });
+        };
+
+        if (user.user_types.name == 'Administrador') {
+          return done(null, user, { message: 'Logged in Successfully' });
+        } else {
+          return done(null, false, { message: 'You must be an admin to acess this page' });
+        }
+        
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
+passport.use('institution',
+  new JwtStrategy(
+    {
+      secretOrKey: process.env.SECRET,
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        // Find the user associated with the email provided by the user
+        const user = await prisma.users.findUnique({
+          where: {
+            email: token.user.email,
+          },
+          include: {
+            user_types: true,
+          },
+        });
+
+        if (!user) {
+          // If the user isn't found in the database, return a message
+          return done(null, false, { message: 'User not found' });
+        };
+
+        if (user.user_types.name == 'Instituições' || user.user_types.name == 'Administrador') { //admin ou instituições
+          return done(null, user, { message: 'Logged in Successfully' });
+        } else {
+          return done(null, false, { message: 'You must be an institution or an admin to acess this page' });
+        }
+        
+      } catch (error) {
+        done(error);
+      }
+    }
+  )
+);
+
+// Save the session of which user is logged in
 passport.serializeUser(function (user, cb) {
   process.nextTick(function () {
     cb(null, { id: user.id, username: user.username });
   });
 });
 
-/* Erases the login information that was saved */
+// Erases the login information that was saved 
 passport.deserializeUser(function (user, cb) {
   process.nextTick(function () {
     return cb(null, user);
