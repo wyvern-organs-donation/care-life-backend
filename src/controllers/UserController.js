@@ -130,7 +130,10 @@ class UserController {
         return res.status(422).json({ message: 'Type user is required!' });
       }
     
-      const formatDate = new Date(birth_date);
+      var dateString = birth_date; // DD-MM-AAAA
+      var dateParts = dateString.split("-");
+      // month is 0-based, that's why we need dataParts[1] - 1
+      var formatDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
     
       try {
         const user = await prismaClient.users.create({
@@ -212,6 +215,15 @@ class UserController {
             const pass = password ? await hash(password) : userExist.password
             const type = type_id ? type_id : userExist.type
 
+            if (birth_date) {
+              var dateString = birth_date; // DD-MM-AAAA
+              var dateParts = dateString.split("-");
+              // month is 0-based, that's why we need dataParts[1] - 1
+              var formatDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+            } else {
+              var formatDate = userExist.birth_date
+            }
+
             const user = await prismaClient.users.update({
                 where: {
                     id
@@ -220,7 +232,7 @@ class UserController {
                     name,
                     email,
                     password: pass,
-                    birth_date: new Date(birth_date),
+                    birth_date: formatDate,
                     phone_number,
                     state,
                     city,
