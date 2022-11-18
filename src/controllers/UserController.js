@@ -118,14 +118,6 @@ class UserController {
         return res.status(422).json({ message: 'Password is required!' });
       }
     
-      if (!birth_date) {
-        return res.status(422).json({ message: 'Birth date is required!' });
-      }
-    
-      if (!phone_number) {
-        return res.status(422).json({ message: 'Phone is required!' });
-      }
-    
       if (!type_id) {
         return res.status(422).json({ message: 'Type user is required!' });
       }

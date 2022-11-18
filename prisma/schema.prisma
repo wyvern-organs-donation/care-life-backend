@@ -23,7 +23,7 @@ model organs {
 
 model users {
   id                               Int        @id @default(autoincrement())
-  type                             Int?
+  type                             Int        
   name                             String     @db.VarChar(70)
   email                            String     @db.VarChar(255) @unique
   password                         String     @db.VarChar(70)
@@ -36,7 +36,7 @@ model users {
   zip                              String?    @db.VarChar(20)
   status                           Boolean    @default(false)
   tokens                           confirmation_tokens[]
-  user_types                       user_types? @relation(fields: [type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
+  user_types                       user_types @relation(fields: [type], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "users_ibfk_1")
   organs_organs_donorTousers       organs[]   @relation("organs_donorTousers")
   organs_organs_institutionTousers organs[]   @relation("organs_institutionTousers")
  
