@@ -67,4 +67,5 @@ const seedAdmin = async () => {
   }
 }
 
+seedAdmin();
 
