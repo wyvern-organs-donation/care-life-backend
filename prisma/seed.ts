@@ -57,7 +57,8 @@ const seedAdmin = async () => {
         adress: "",
         city: "",
         state: "",
-        zip: ""
+        zip: "",
+        status: true
       } 
     });
     console.info('[SEED] Succussfully create user records');
