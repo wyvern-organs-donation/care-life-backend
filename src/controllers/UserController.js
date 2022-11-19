@@ -33,7 +33,7 @@ const sendConfirmationEmail = async  (user, token, req) => {
   });
 
   var message = {
-      from: "norepley@wyver.com.br",
+      from: "norepley@CareLife.com.br",
       to: user.email,
       subject: "Confirmação de cadastro - Wyver",
       text: `Prezado(a) ${user.name}. \n\nBem-vindo(a) à Wyver! \n\nClique no link abaixo para confirmar seu e-mail e concluir seu cadastro: \nhttp://${req.headers.host}/user/confirmation/${user.id}/${token.token} \n\nEste link tem validade de 24h. Recomendamos que você realize a confirmação assim que receber este e-mail.`,
