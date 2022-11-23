@@ -1,5 +1,15 @@
 ## Configurando e inicializando o projeto
 
+## Wyverns Squad
+- Ana Carolina
+- Carlos Cesar
+- Gabriel da Silva Sá
+- Gilmar Freire
+- Gilvânia Moreira
+- Gustavo Henrique
+- Rafaella Sampaio
+- Tiago Costa
+
 Primeiramente deverá fazer o clone da aplicação em sua máquina:
 
 Através do https
