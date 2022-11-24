@@ -9,24 +9,46 @@ const prisma = new PrismaClient();
 const dotenv = require('dotenv');
 dotenv.config();
 
+const userSelect = {
+  id: true,
+  type: true,
+  name: true,
+  password: true,
+  email: true,
+  birth_date: true,
+  phone_number: true,
+  cpf: true,
+  adress: true,
+  city: true,
+  state: true,
+  zip: true,
+  status: true,
+  user_types: {
+    select: {
+      id: true,
+      name: true
+    }
+  }
+};
+
 passport.use(
   new LocalStrategy(
     { usernameField: 'email', passwordField: 'password' },
     async (email, password, cb) => {
       // Check if user found
-      const user = await prisma.users.findFirst({ where: { email: email } });
+      const user = await prisma.users.findFirst({ where: { email: email }, select: userSelect });
       if (!user)
-        return cb(null, false, { status: false, message: 'No user found.' });
+        return cb(null, false, { status: false, message: 'Usuário não encontrado.' });
 
       const validPassword = await compare(password, user.password);
 
       if (!validPassword) {
-        return cb(null, false, { status: false, message: 'Incorrect username or password.' });
+        return cb(null, false, { status: false, message: 'Usuário ou senha incorretos.' });
       }
       else if (!user.status){
-        return cb(null, false, { status: false, message: 'Your Email has not been verified. Please click on resend'});
+        return cb(null, false, { status: false, message: 'Seu email não foi verificado'});
       }
-      return cb(null, user, { status: true, message: 'Logged in sucessfully' });
+      return cb(null, user, { status: true, message: 'Login com sucesso' });
     }
   )
 );
@@ -44,7 +66,7 @@ passport.use('normal',
         const user = await prisma.users.findUnique({
           where: {
             email: token.user.email,
-          },
+          }, select: userSelect
         });
 
         if (!user) {
@@ -54,7 +76,7 @@ passport.use('normal',
 
         // Send the user information to the next middleware
         return done(null, user, { message: 'Logged in Successfully' });
-        
+
       } catch (error) {
         done(error);
       }
@@ -90,7 +112,7 @@ passport.use('admin',
         } else {
           return done(null, false, { message: 'You must be an admin to acess this page' });
         }
-        
+
       } catch (error) {
         done(error);
       }
@@ -126,7 +148,7 @@ passport.use('institution',
         } else {
           return done(null, false, { message: 'You must be an institution or an admin to acess this page' });
         }
-        
+
       } catch (error) {
         done(error);
       }
@@ -141,7 +163,7 @@ passport.serializeUser(function (user, cb) {
   });
 });
 
-// Erases the login information that was saved 
+// Erases the login information that was saved
 passport.deserializeUser(function (user, cb) {
   process.nextTick(function () {
     return cb(null, user);
