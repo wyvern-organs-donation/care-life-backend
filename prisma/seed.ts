@@ -45,7 +45,7 @@ const seedAdmin = async () => {
   const password = await bcrypt.hash("admin", salt);
   const usertype = await prisma.user_types.findFirst({where: {name: "Administrador"}})
   try{
-    const user = await prisma.users.create({ 
+    const user = await prisma.users.create({
       data: {
         name: "admin",
         email: "admin@carelife.com",
@@ -59,13 +59,11 @@ const seedAdmin = async () => {
         state: "",
         zip: "",
         status: true
-      } 
+      }
     });
     console.info('[SEED] Succussfully create user records');
   }catch(error){
     console.log(error)
   }
 }
-
-seedAdmin();
 
