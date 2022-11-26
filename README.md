@@ -1,4 +1,4 @@
-## Care Life - Configurando e Inicializando o Projeto Frontend
+## Care Life - Configurando e Inicializando o Projeto Backend
 
 ### Problemática do projeto 💬
 
