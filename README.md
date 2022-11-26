@@ -22,9 +22,12 @@ medula óssea pode ser feita em vida.
 - Tiago Costa
 
 ### Tecnologia Utilizadas no Backend 📟
-- Vite
-- React
-- Bootstrap
+- MySQL
+- Node.js
+- Prisma
+- Nodemailer
+- Passport
+- Swagger
 
 > Status: Finalizado ⚠️
 
