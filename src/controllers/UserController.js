@@ -19,7 +19,13 @@ const userSelect = {
     adress: true,
     city: true,
     state: true,
-    zip: true
+    zip: true,
+    user_types: {
+      select: {
+        id: true,
+        name: true
+      }
+    }
 };
 
 const sendConfirmationEmail = async  (user, token, req) => {
@@ -54,7 +60,7 @@ class UserController {
 
         return res.status(200).json(users);
     }
-    
+
     async getUserById(req, res) {
         const id = +req.params.id;
 
@@ -64,7 +70,7 @@ class UserController {
             },
             select: userSelect
         });
-        
+
         if (!user) {
             return res.status(400).json("The user could not be found.");
         }
@@ -75,7 +81,7 @@ class UserController {
     // filter by user type
     async filterUser(req,res) {
       const userTypeId = req.query.user_type_id;
-      
+
 
       const users = await prismaClient.users.findMany({
           where: {
@@ -105,28 +111,28 @@ class UserController {
         state,
         zip,
       } = req.body;
-    
+
       if (!name) {
         return res.status(422).json({ message: 'Name is required!' });
       }
-    
+
       if (!email) {
         return res.status(422).json({ message: 'Email is required!' });
       }
-    
+
       if (!password) {
         return res.status(422).json({ message: 'Password is required!' });
       }
-    
+
       if (!type_id) {
         return res.status(422).json({ message: 'Type user is required!' });
       }
-    
+
       var dateString = birth_date; // DD-MM-AAAA
       var dateParts = dateString.split("-");
       // month is 0-based, that's why we need dataParts[1] - 1
       var formatDate = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
-    
+
       try {
         const user = await prismaClient.users.create({
           data: {
@@ -147,9 +153,9 @@ class UserController {
             },
           },
         });
-    
+
         var now = new Date();
-    
+
         const token = await prismaClient.confirmation_tokens.create({
           data: {
             token: crypto.randomBytes(16).toString('hex'),
@@ -157,9 +163,9 @@ class UserController {
             user_id: user.id,
           }
         })
-    
+
         await sendConfirmationEmail(user, token, req);
-        
+
         res.status(200).json({ message: 'User successfully registered!', user });
       } catch (error) {
         console.log(error);
@@ -178,9 +184,9 @@ class UserController {
           await prismaClient.$disconnect();
         };
       }
-        
+
     }
-    
+
     async updateUser(req, res) {
         const id = +req.params.id;
         const {
@@ -196,10 +202,10 @@ class UserController {
             state,
             zip,
           } = req.body;
-        
+
         try {
             const userExist = await prismaClient.users.findUnique({ where: { id } });
-            
+
             if (!userExist) {
                 return res.status(400).json("The user could not be found.");
             }
@@ -239,7 +245,7 @@ class UserController {
         } catch (err) {
             console.log(err)
             return res.status(400).json("Invalid data.");
-        }  
+        }
     }
 
     async deleteUser(req, res) {
@@ -262,20 +268,20 @@ class UserController {
 
     async confirmRegistration (req, res, next) {
       var token = await prismaClient.confirmation_tokens.findFirst({ where: {token: req.params.token} })
-          // token is not found into database i.e. token may have expired 
+          // token is not found into database i.e. token may have expired
       if (!token){
           return res.status(400).json({message:'Invalid token.'});
       }
       if (token.expiration < new Date()){
           return res.status(400).json({message:'Your verification link may have expired. Please click on resend for verify your Email.'});
       }
-      // if token is found then check valid user 
+      // if token is found then check valid user
       else{
         var user = await prismaClient.users.findFirst({ where: {id: parseInt(req.params.id), tokens: {every: {token: req.params.token} }}})
         // not valid user
         if (!user){
             return res.status(401).json({message: 'We were unable to find a user for this verification. Please SignUp!'});
-        } 
+        }
         // user is already verified
         else if (user.status){
             return res.status(200).json({message: 'User has been already verified. Please Login'});
@@ -283,12 +289,12 @@ class UserController {
         // verify user
         else{
             // change isVerified to true
-            user =  await prismaClient.users.update({ 
+            user =  await prismaClient.users.update({
                 where: {
                     id: parseInt(req.params.id)
                 }, data: {
                     status: true
-                } 
+                }
             });
             return res.status(200).json({message: 'Email has been confirmed sucessfully'});
         }

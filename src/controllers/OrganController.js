@@ -2,15 +2,8 @@ const { PrismaClient, Prisma, prisma } = require('@prisma/client');
 
 const prismaClient = new PrismaClient();
 
-const organSelect = {
-    id: true,
-    type: true,
-    donor: true,
-    institution: true
-}
-
 const organAllFieldsSelect = {
-    id: true, 
+    id: true,
     organ_types: {
         select: {
             id: true,
@@ -34,7 +27,7 @@ const organAllFieldsSelect = {
 class OrganController {
     async getAllOrgans(req,res) {
         const organs = await prismaClient.organs.findMany({
-            select: organSelect
+            select: organAllFieldsSelect
         })
 
         return res.status(200).json(organs)
@@ -47,7 +40,7 @@ class OrganController {
             where: {
                 id
             },
-            select: organSelect
+            select: organAllFieldsSelect
         })
 
         if (!organ) {
@@ -92,7 +85,7 @@ class OrganController {
         if (!donor_id) {
             return res.status(422).json({ message: 'Donor is required!' });
           }
-        
+
           if (!institution_id) {
             return res.status(422).json({ message: 'Institution is required!' });
           }
@@ -136,14 +129,14 @@ class OrganController {
             donor_id,
             institution_id
           } = req.body;
-        
+
         try {
             const organExist = await prismaClient.organs.findUnique({ where: { id } });
-            
+
             if (!organExist) {
                 return res.status(400).json("The organ could not be found.");
             }
-            
+
             const organ = await prismaClient.organs.update({
                 where: {
                     id
@@ -165,12 +158,12 @@ class OrganController {
                         }
                     }
                 },
-                select: organSelect
+                select: organAllFieldsSelect
             });
             return res.status(200).json(organ);
         } catch (err) {
             return res.status(400).json("Invalid data.");
-        }  
+        }
     }
 
     async deleteOrgan(req,res) {
@@ -191,4 +184,4 @@ class OrganController {
     }
 }
 
-module.exports = { organSelect, OrganController }
+module.exports = { organAllFieldsSelect, OrganController }
