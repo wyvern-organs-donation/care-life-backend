@@ -1,6 +1,17 @@
-## Configurando e inicializando o projeto
+## Care Life - Configurando e Inicializando o Projeto Frontend
 
-## Wyverns Squad
+### Problemática do projeto 💬
+
+> A doação de órgãos ou de tecidos é o ato pelo qual manifestamos a vontade de doar uma ou
+mais partes do nosso corpo para ajudar no tratamento de outras pessoas.
+De acordo com o Ministério da Saúde, a doação pode ser de órgãos **(rim, fígado, coração,
+pâncreas e pulmão) ou de tecidos (córnea, pele, ossos, válvulas cardíacas, cartilagem, medula
+óssea e sangue de cordão umbilical)**. A doação de órgãos como rim, parte do fígado ou da
+medula óssea pode ser feita em vida.
+
+ O Care Life é uma aplicação Web planejada e desenvolvida pela Wyverns Squad para o Bootcamp do Instituto Atlântico, para solucionar a problemática citada.
+ 
+### Equipe de desenvolvimento Wyverns Squad 👨‍💻
 - Ana Carolina
 - Carlos Cesar
 - Gabriel da Silva Sá
@@ -10,7 +21,17 @@
 - Rafaella Sampaio
 - Tiago Costa
 
-Primeiramente deverá fazer o clone da aplicação em sua máquina:
+### Tecnologia Utilizadas no Backend 📟
+- Vite
+- React
+- Bootstrap
+
+> Status: Finalizado ⚠️
+
+### Passo a Passo para a instalação 📟
+
+
+1. Primeiramente deverá fazer o clone da aplicação em sua máquina:
 
 Através do https
 ```
@@ -27,7 +48,7 @@ Utilizamos o `npm install` para instalar todas as depedências utilizadas no pro
 ```
     npm install 
 ```
-Para essa próxima etapa é necessário ter o arquivo [`.env` configurado](https://www.prisma.io/docs/concepts/database-connectors/mysql).
+2. Para essa próxima etapa é necessário ter o arquivo [`.env` configurado](https://www.prisma.io/docs/concepts/database-connectors/mysql). ⚠️
 
 ```
     mysql://USER:PASSWORD@HOST:PORT/DATABASE
@@ -35,20 +56,20 @@ Para essa próxima etapa é necessário ter o arquivo [`.env` configurado](https
     EMAIL_USER="mailtrap_user"
     EMAIL_PASS="mailtrap_pass"
 ```
-* Utilizamos o [mailtrap](https://mailtrap.io/) como servidor de envio de emails.
+* Utilizamos o [mailtrap](https://mailtrap.io/) como servidor de envio de emails. 
 
-Logo após a instalação, utilizamos o `npx prisma migrate dev` para criar as tabelas do nosso banco. 
+3. Logo após a instalação, utilizamos o `npx prisma migrate dev` para criar as tabelas do nosso banco. 
 ```
     npx prisma migrate dev
 ```
 Para essa próxima etapa é necessário ter o arquivo `.env` configurado (utilizar o .env.example como base).
 
-Em seguida, utilizamos o `npx prisma generate` para inicilizar e gerar um cliente prisma. 
+4. Em seguida, utilizamos o `npx prisma generate` para inicilizar e gerar um cliente prisma. 
 ```
     npx prisma generate
 ```
 
-Para popular o Banco de dados, utilizamos o `npx prisma db seed`. 
+5. Para popular o Banco de dados, utilizamos o `npx prisma db seed`. 
 ```
     npx prisma db seed
 ```
@@ -60,12 +81,12 @@ email: admin@carelife.com
 senha: admin
 ```
 
-Para gerar a documentação do Swagger, utilizamos o `npm run swagger-autogen`. 
+6. Para gerar a documentação do Swagger, utilizamos o `npm run swagger-autogen`. 
 ```
     npm run swagger-autogen
 ```
 
-E, por fim, usamos o `npm start` para iniciar o servidor em modo de desenvolvimento  no endereço: [http://localhost:3000](http://localhost:3000)
+7. E, por fim, usamos o `npm start` para iniciar o servidor em modo de desenvolvimento  no endereço: [http://localhost:3000](http://localhost:3000)
 ```
     npm start
 ```
